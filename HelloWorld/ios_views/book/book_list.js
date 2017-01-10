@@ -37,15 +37,87 @@ var BookList = React.createClass({
     };
   },
 
+  getData : function() {
+    //开启loading 每次搜索时都需要重新下载显示数据
+    this.setState({
+      show : false
+    });
+
+    //请求数据
+    var that = this;
+    var url = ServiceUrl.book_search + "?count=20&q="+this.state.keywords;
+    Util.getRequest(url,function(data){
+      //请求成功回调
+      /*如果没有数据 alert提示*/
+
+      if (!data.books || data.books.length == 0) {
+        return alert("no book")
+      }
+      //设置下载状态和数据源
+      var ds = new ListView.DataSource({
+        rowHasChanged : (oldRow,newRow) => oldRow!==newRow
+      });
+      that.setState({
+        show : true,
+        dataSource : ds.cloneWithRows(data.books)
+      });
+
+    },function(error){
+      //请求失败回调
+      alert(error);
+    })
+
+  },
+
+  //TextInput的onChangedText事件处理方法
+  _changeText : function(text) {
+    this.setState({
+      keywords : text
+    });
+  },
+
+  _searchPress : function() {
+    this.getData();
+  },
+
   render : function() {
     return (
       <ScrollView>
-        <SearchBar />
+        <SearchBar
+          placeholder = "请输入图书的名称"
+          onPress = {this._searchPress}
+          onChangeText = {this._changeText}/>
+        {
+          //请求数据时显示loading，数据请求成功后显示listView
+          this.state.show ? <ListView
+            dataSource = {this.state.dataSource}
+            initialListSize = {10}
+            renderRow = {this._renderRow}
+            renderSeparator = {this._renderSeparator}/>
+            :
+            Util.loading
+        }
       </ScrollView>
     );
+  },
+
+  componentDidMount : function() {
+    this.getData();
+  },
+
+  _renderRow : function(book) {
+    return <BookItem book = {book}/>
+  },
+
+  _renderSeparator : function(sectionId : number ,rowId : number) {
+    var style = {
+      height : 1,
+      backgroundColor : "#CCCCCC"
+    }
+    return <View style = {style} key = {sectionId + rowId} />
   }
 
-})
+});
 
 var styles = StyleSheet.create({
 

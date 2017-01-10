@@ -67,7 +67,7 @@ var BookItem = React.createClass({
 });
 
 
-var styles = StyleSheet.crete({
+var styles = StyleSheet.create({
   item : {
     flexDirection : "row",
     height : 120,

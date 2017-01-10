@@ -25,7 +25,7 @@ var SearchBar = React.createClass({
 
 });
 
-var styles = StyleSheet.crete({
+var styles = StyleSheet.create({
     container : {
       flexDirection : "row",
       justifyContent : "flex-end",

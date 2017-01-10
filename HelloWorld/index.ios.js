@@ -17,6 +17,9 @@ import {
 //隐藏状态栏
 StatusBar.setHidden(true);
 
+var BookList = require("./ios_views/book/book_list");
+var Navigation = require("./ios_views/common/navigation");
+
 //TabBarIOS 管理两个模块 图书和电影
 var HelloWorld = React.createClass({
   getInitialState : function() {
@@ -36,7 +39,7 @@ var HelloWorld = React.createClass({
               selectedTab : "图书"
             })
           }}>
-          <View style = {{backgroundColor : "cyan",flex : 1}}></View>
+          <Navigation component = {BookList} />
         </TabBarIOS.Item>
 
         <TabBarIOS.Item
