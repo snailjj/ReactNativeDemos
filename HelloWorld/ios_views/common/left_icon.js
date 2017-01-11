@@ -19,7 +19,7 @@ var Icon = React.createClass({
   }
 });
 
-var styles = StyleSheet.crete({
+var styles = StyleSheet.create({
   go : {
     width : 15,
     height : 15,

@@ -19,6 +19,7 @@ StatusBar.setHidden(true);
 
 var BookList = require("./ios_views/book/book_list");
 var Navigation = require("./ios_views/common/navigation");
+var MovieList = require("./ios_views/movie/movie_list");
 
 //TabBarIOS 管理两个模块 图书和电影
 var HelloWorld = React.createClass({
@@ -52,7 +53,7 @@ var HelloWorld = React.createClass({
           }}
           icon = {require('./movie.png')}
           >
-          <View style = {{backgroundColor : "yellow",flex : 1}}></View>
+          <Navigation component = {MovieList}/>
         </TabBarIOS.Item>
 
       </TabBarIOS>

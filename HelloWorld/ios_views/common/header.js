@@ -30,7 +30,7 @@ var Header = React.createClass({
         </View>
       </View>
     );
-  }
+  },
 
   //返回按钮事件处理方法
   _pop : function () {
@@ -40,7 +40,7 @@ var Header = React.createClass({
 });
 
 
-var styles = StyleSheet.crete({
+var styles = StyleSheet.create({
   header : {
     height : 44,
     backgroundColor : "#3497FF",

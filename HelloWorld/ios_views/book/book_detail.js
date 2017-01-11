@@ -13,16 +13,80 @@ var ServiceUrl = require("./../common/service");
 var Util = require("./../common/tools");
 var Header = require("./../common/header");
 var BookItem = require("./book_item");
+var BookDetail = require("./book_detail");
 
 var BookDetail = React.createClass({
-  getinitialState : function() {
+  getInitialState : function() {
     return {
         bookData : null //图书对象详细信息
     }
   },
+
+  getData : function() {
+    //获取图书信息
+    var that = this;
+    var url = ServiceUrl.book_detail_id + this.props.bookID;
+    Util.getRequest(url,function(data){
+
+      that.setState({
+        bookData : data
+      });
+
+    },function(error){
+      alert(error);
+    });
+  },
+
+  render : function() {
+    return (
+      <ScrollView style = {styles.container}>
+        {
+          this.state.bookData ?
+           <View>
+              <Header
+                initObj = {{backName : "图书",barTitle : this.state.bookData.title}}
+                navigator = {this.props.navigator}/>
+              <BookItem book = {this.state.bookData}/>
+              <View>
+                <Text style = {styles.title}></Text>
+                <Text style = {styles.text}>{this.state.bookData.summary}</Text>
+              </View>
+              <View style = {{marginTop : 10}}>
+                <Text style = {styles.title}>作者简介</Text>
+                <Text style = {styles.text}>{this.state.bookData.author_intro}</Text>
+              </View>
+              <View style = {{height : 55}}></View>
+            </View>
+          : Util.loading
+        }
+      </ScrollView>
+    );
+  },
+
+  componentDidMount : function() {
+    //请求图书数据
+    this.getData();
+  }
+
 });
 
 var styles = StyleSheet.create({
+  container : {
+    flex : 1,
+    backgroundColor : "white"
+  },
+  title : {
+    fontSize : 16,
+    marginTop : 10,
+    marginLeft : 10,
+    marginBottom : 10,
+    fontWeight : "bold"
+  },
+  text : {
+    marginLeft : 10,
+    marginRight : 10,
+    color : "#000D22"
+  }
 
 });
 

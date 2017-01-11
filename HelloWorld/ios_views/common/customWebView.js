@@ -34,7 +34,7 @@ var CustomWebView = React.createClass({
         <WebView
           startInLoadingState = {true}
           contentInset = {{top : -44, bottom : -120}}
-          source : {{url : this.props.url}}/>
+          source = {{url : this.props.url}}/>
       </View>
     );
   }

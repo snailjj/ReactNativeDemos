@@ -20,6 +20,7 @@ var Util = require("./../common/tools");
 var SearchBar = require("./../common/searchBar");
 var ServiceUrl = require("./../common/service");
 var BookItem = require("./book_item");
+var BookDetail = require("./book_detail");
 
 var BookList = React.createClass({
 
@@ -80,6 +81,16 @@ var BookList = React.createClass({
     this.getData();
   },
 
+  _showDetail : function(bookID) {
+    var detailRoute = {
+      component : BookDetail,
+      passProps : {
+        bookID : bookID
+      }
+    }
+    this.props.navigator.push(detailRoute);
+  },
+
   render : function() {
     return (
       <ScrollView>
@@ -106,7 +117,7 @@ var BookList = React.createClass({
   },
 
   _renderRow : function(book) {
-    return <BookItem book = {book}/>
+    return <BookItem book = {book} onPress = {this._showDetail.bind(this, book.id)}/>
   },
 
   _renderSeparator : function(sectionId : number ,rowId : number) {
